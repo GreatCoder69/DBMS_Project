@@ -1,0 +1,45 @@
+/* Apply Bootstrap styles */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+/* Reset some default styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa; /* Light grey background */
+}
+
+/* Ensure the app container takes full width */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Purple bar styles */
+.top-bar {
+  background-color: #37003c; /* Premier League purple */
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: white;
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 15px;
+}
+
+.navbar a:hover {
+  color: #37003c;
+  text-decoration: underline;
+}

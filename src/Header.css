@@ -1,0 +1,51 @@
+/* Purple Top Bar */
+.top-bar {
+  background-color: #37003c; /* Premier League Purple */
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-bar img {
+  height: 50px;
+  margin-right: 5px;
+}
+
+/* Navigation Bar */
+.navbar-custom {
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .nav-item .nav-link {
+  color: black;
+  font-weight: 500;
+  transition: 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #37003c; /* Hover effect */
+}
+
+/* Buttons */
+.btn-signin {
+  background-color: #37003c;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.btn-search {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  color: black;
+}
+
+.btn-search:hover {
+  color: #37003c;
+}

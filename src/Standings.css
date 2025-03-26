@@ -1,0 +1,66 @@
+.standings-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  font-weight: bold;
+  color: #6c4675;
+  text-transform: uppercase;
+}
+
+.club-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.club-img {
+  width: 30px;
+  height: 30px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/* Accent Bar Styles */
+tr {
+  position: relative;
+}
+
+td:first-child {
+  border-left: 8px solid transparent;
+  padding-left: 15px;
+}
+
+/* Accent Colors */
+.accent-blue td:first-child {
+  border-left-color: blue;
+}
+
+.accent-orange td:first-child {
+  border-left-color: orange;
+}
+
+.accent-green td:first-child {
+  border-left-color: green;
+}
+
+/* Add Hover Effect */
+tr:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+

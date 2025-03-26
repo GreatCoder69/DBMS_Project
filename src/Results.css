@@ -1,0 +1,69 @@
+.match-card {
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+}
+
+.match-date {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #3d195b;
+}
+
+.stadium {
+  font-size: 1rem;
+  font-weight: 500;
+  color: gray;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.team-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.score {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  background-color: #3d195b;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 0 10px;
+}
+
+.goal-scorers {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.goal-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+
+.home-scorer,
+.away-scorer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.away-scorers {
+  text-align: right;
+}
