@@ -1,11 +1,13 @@
 .players-table {
-  width: 100%;
+  width: 80%;
   margin: 20px auto;
+  text-align: center;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  margin: 0 auto;
 }
 
 th, td {
@@ -15,9 +17,9 @@ th, td {
 
 th {
   font-weight: bold;
-  color: #4b2c69;
+  color: white;
+  background-color: #000000;
   text-transform: uppercase;
-  text-align: center;
 }
 
 tbody tr {
@@ -28,14 +30,9 @@ tbody tr:hover {
   background-color: #f5f5f5;
 }
 
-.player-info {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Add spacing between image and text */
-}
-
-.player-img {
-  width: 40px;
-  height: 40px;
+.club-badge {
+  width: 70px !important;
+  height: 70px !important;
   border-radius: 50%;
+  object-fit: cover;
 }

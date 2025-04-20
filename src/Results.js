@@ -1,77 +1,120 @@
-import React from "react";
-import "./Results.css"; // Custom styles
+import React, { useState, useEffect } from "react";
+import "./Results.css";
 
 const Results = () => {
-  // Example match data
-  const matches = [
-    {
-      date: "Monday 17 March 2025",
-      stadium: "Old Trafford",
-      homeTeam: "Leicester",
-      awayTeam: "Man Utd",
-      homeLogo: "/logo.png",
-      awayLogo: "/logo.png",
-      score: "1 - 3",
-      homeScorer: "Jamie Vardy",
-      awayScorers: ["Phil Jones", "Phil Jones", "Phil Jones"],
-    },
-    {
-      date: "Monday 17 March 2025",
-      stadium: "Old Trafford",
-      homeTeam: "Leicester",
-      awayTeam: "Man Utd",
-      homeLogo: "/logo.png",
-      awayLogo: "/logo.png",
-      score: "1 - 3",
-      homeScorer: "Jamie Vardy",
-      awayScorers: ["Phil Jones", "Phil Jones", "Phil Jones"],
-    },
-    {
-      date: "Monday 17 March 2025",
-      stadium: "Old Trafford",
-      homeTeam: "Leicester",
-      awayTeam: "Man Utd",
-      homeLogo: "/logo.png",
-      awayLogo: "/logo.png",
-      score: "1 - 3",
-      homeScorer: "Jamie Vardy",
-      awayScorers: ["Phil Jones", "Phil Jones", "Phil Jones"],
-    },
-  ];
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/matches");
+        if (!res.ok) throw new Error("Failed to fetch match data");
+
+        const data = await res.json();
+
+        const grouped = {};
+        data.forEach((item) => {
+          const matchId = item.MATCH_ID;
+          if (!grouped[matchId]) {
+            grouped[matchId] = {
+              id: matchId,
+              date: item.MATCH_DATE,
+              stadium: item.STADIUM_NAME,
+              team1: {
+                name: item.HOME_TEAM_NAME,
+                logo: item.HOME_TEAM_BADGE,
+                possession: item.MATCH_HOME_POSSESSION,
+                scorers: [],
+              },
+              team2: {
+                name: item.AWAY_TEAM_NAME,
+                logo: item.AWAY_TEAM_BADGE,
+                possession: item.MATCH_AWAY_POSSESSION,
+                scorers: [],
+              },
+              score: `${item.MATCH_HOME_SCORE} - ${item.MATCH_AWAY_SCORE}`,
+            };
+          }
+
+          const scorerInfo = `${item.SCORER_NAME} ${item.EVENT_MINUTE}'`;
+          if (item.SCORER_TEAM_BADGE === item.HOME_TEAM_BADGE) {
+            grouped[matchId].team1.scorers.push(scorerInfo);
+          } else {
+            grouped[matchId].team2.scorers.push(scorerInfo);
+          }
+        });
+
+        setMatches(Object.values(grouped));
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMatches();
+  }, []);
+
+  if (loading) return <div className="loading-message">Loading matches...</div>;
+  if (error) return <div className="error-message">Error: {error}</div>;
 
   return (
-    <div className="container mt-4">
-      {matches.map((match, index) => (
-        <div key={index} className="card match-card mb-3">
-          <div className="card-body">
-            <h5 className="match-date">{match.date}</h5>
-            <h6 className="stadium">{match.stadium}</h6>
-            <div className="d-flex align-items-center justify-content-center">
-              <div className="team">
-                <span className="team-name">{match.homeTeam}</span>
-                <img src={match.homeLogo} alt={match.homeTeam} className="team-logo mx-2" />
-              </div>
-              <span className="score">{match.score}</span>
-              <div className="team">
-                <img src={match.awayLogo} alt={match.awayTeam} className="team-logo mx-2" />
-                <span className="team-name">{match.awayTeam}</span>
-              </div>
+    <div className="results-container">
+      {matches.map((match) => (
+        <div key={match.id} className="match-card">
+          <div className="match-header">
+            <h3>{match.stadium}</h3>
+            <p>{new Date(match.date).toLocaleDateString()}</p>
+          </div>
+
+          <div className="match-details">
+            {/* Team 1 */}
+            <div className="team">
+              <img src={match.team1.logo} alt={match.team1.name} className="team-logo" />
+              <div className="team-name">{match.team1.name}</div>
+              {match.team1.scorers.length > 0 ? (
+                match.team1.scorers.map((s, i) => (
+                  <div key={i} className="scorer">{s}</div>
+                ))
+              ) : (
+                <div className="scorer">No scorers</div>
+              )}
             </div>
-            {/* Goal Scorers */}
-            <div className="goal-scorers">
-              <div className="home-scorer">
-                <img src="/logo.png" alt="Goal" className="goal-icon" />
-                <span>{match.homeScorer}</span>
-              </div>
-              <div className="away-scorers">
-                {match.awayScorers.map((scorer, i) => (
-                  <div key={i} className="away-scorer">
-                    <img src="/logo.png" alt="Goal" className="goal-icon" />
-                    <span>{scorer}</span>
-                  </div>
-                ))}
-              </div>
+
+            {/* Score */}
+            <div className="score-box">{match.score}</div>
+
+            {/* Team 2 */}
+            <div className="team">
+              <img src={match.team2.logo} alt={match.team2.name} className="team-logo" />
+              <div className="team-name">{match.team2.name}</div>
+              {match.team2.scorers.length > 0 ? (
+                match.team2.scorers.map((s, i) => (
+                  <div key={i} className="scorer">{s}</div>
+                ))
+              ) : (
+                <div className="scorer">No scorers</div>
+              )}
             </div>
+          </div>
+
+          {/* Possession Bar */}
+          <div className="possession-heading">Possession</div>
+          <div className="possession-bar">
+            <div
+              className="possession-segment team1"
+              style={{ width: `${match.team1.possession}%` }}
+            />
+            <div
+              className="possession-segment team2"
+              style={{ width: `${match.team2.possession}%` }}
+            />
+          </div>
+          <div className="possession-percentages">
+            <span>{match.team1.possession}%</span>
+            <span>{match.team2.possession}%</span>
           </div>
         </div>
       ))}

@@ -5,6 +5,7 @@ import Results from "./Results";
 import Players from "./Players";
 import Standings from "./Standings";
 import Stats from "./Stats";
+import ClubInfo from "./ClubInfo";
 import "./App.css";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/players" element={<Players />} />
             <Route path="/standings" element={<Standings />} />
             <Route path="/stats" element={<Stats />} />
+            <Route path="/clubinfo" element={<ClubInfo />} />
           </Routes>
         </div>
       </Router>

@@ -1,98 +1,356 @@
-.player-stats {
-  padding: 20px;
+body {
+  background-color: #0a0a0a !important;
+  color: white;
   font-family: Arial, sans-serif;
 }
-
-h2 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #30024d;
-  text-align: center;
-  margin-bottom: 20px;
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+/* 🔥 Neon Heading */
+.neon-heading {
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
+  color: cyan;
+  text-shadow: 0px 0px 10px cyan, 0px 0px 20px cyan;
+  animation: flicker 1.5s infinite alternate;
+}
+
+/* Player Card */
+.player-card {
+  background: #111;
+  border-radius: 12px;
+  transition: 0.3s;
+  box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.player-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.7);
+}
+
+/* Player Image */
+.player-img {
+  height: 250px;
+  object-fit: cover;
+}
+
+/* Club Logo */
+.club-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+}
+
+/* Player Name */
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* Stat Number */
+.stat-number {
+  font-size: 16px;
+  font-weight: 600;
+  color: cyan;
+  text-shadow: 0 0 5px cyan;
+}
+
+/* Neon Flicker Animation */
+@keyframes flicker {
+  0% { opacity: 0.8; text-shadow: 0 0 10px cyan; }
+  50% { opacity: 1; text-shadow: 0 0 20px cyan; }
+  100% { opacity: 0.8; text-shadow: 0 0 10px cyan; }
+}
+
+/* Player Card - Ensuring Black Background and White Text */
+.player-card {
+  background: #000 !important; /* Force black background */
+  border-radius: 12px;
+  transition: 0.3s;
+  box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.2);
+  overflow: hidden;
+  padding: 20px;
+  color: white !important; /* Ensure text is white */
+}
+
+/* Player Name - White Text */
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  color: white !important;
+}
+
+/* Fix Club Logo Visibility */
+.club-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  background-color: transparent; /* Avoid white background */
+}
+
+/* Fix Player Image */
+.player-img {
+  height: 250px;
+  object-fit: cover;
+  display: block;
+  width: 100%; /* Ensure proper sizing */
+}
+
+/* Fix Stat Number */
+.stat-number {
+  font-size: 16px;
+  font-weight: 600;
+  color: cyan !important;
+  text-shadow: 0 0 5px cyan;
+}
+
+
+.expand-arrow {
+  font-size: 40px;
+  color: cyan;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+.expand-arrow:hover {
+  transform: scale(1.3) rotate(90deg);
+  color: #00ffffcc;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.custom-modal {
+  background: #111;
+  padding: 20px 30px;
+  border-radius: 12px;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 600px;
+  position: relative;
+  color: white;
+  box-shadow: 0 0 20px cyan;
+}
+
+.modal-title {
+  font-size: 24px;
+  color: cyan;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-player-card {
+  display: flex;
+  align-items: center;
+  background: #000;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px cyan;
+}
+
+.modal-player-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.modal-player-details p {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #ccc;
+}
+/* Button style */
+.view-top-btn {
+  padding: 10px 30px;
+  background-color: cyan;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: 0.3s;
+  box-shadow: 0 0 10px cyan;
+}
+
+.view-top-btn:hover {
+  background-color: #00eaff;
+  box-shadow: 0 0 20px cyan;
+  transform: scale(1.05);
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.custom-modal {
+  background: #111;
+  padding: 40px;
+  border-radius: 16px;
+  width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 0 25px cyan;
+}
+
+.modal-title {
+  font-size: 28px;
+  color: cyan;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 32px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
-.stat-box {
-  background: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-h3 {
-  font-size: 18px;
-  font-weight: bold;
-  color: #30024d;
-}
-
-.top-player {
-  background: #d80404;
-  color: white;
-  border-radius: 10px;
-  padding: 10px;
+.modal-player-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  background: #000;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
-.player-img {
-  width: 50px;
-  height: 50px;
+.modal-player-img {
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
 }
 
-.player-info h4 {
-  font-size: 16px;
-  font-weight: bold;
+.modal-player-details p {
+  margin: 4px 0;
+  font-size: 15px;
+  color: #ccc;
 }
-
-.player-info p {
-  font-size: 12px;
-  margin: 2px 0;
+.custom-modal {
+  background: #111;
+  padding: 40px;
+  width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 0 25px cyan;
+  border-radius: 0; /* No more rounded corners */
 }
-
-.big-stat {
-  font-size: 28px;
-  font-weight: bold;
-  right:0;
-}
-
-.stat-list {
-  list-style: none;
-  padding: 0;
-}
-
-.stat-item {
+.modal-player-card {
   display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-  border-bottom: 1px solid #ddd;
+  align-items: center;
+  justify-content: flex-start;
+  background: #181818;
+  border-radius: 12px;
+  padding: 18px 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 16px rgba(0,255,255,0.07);
+  position: relative;
 }
 
-.position {
-  font-weight: bold;
-  color: #6c4675;
+.modal-player-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00ffff;
+  margin-right: 20px;
 }
 
-.player-name {
+.modal-player-details {
   flex: 1;
-  padding-left: 10px;
+  color: #fff;
 }
 
-.stat-value {
+.modal-player-statbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 30px;
+  min-width: 80px;
+}
+
+.stat-label {
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.stat-value-neon {
+  color: #00fff7;
+  font-size: 1.5em;
   font-weight: bold;
+  text-shadow:
+    0 0 6px #00fff7,
+    0 0 12px #00fff7,
+    0 0 20px #00fff7;
+  letter-spacing: 1px;
 }
 
-
-/* Responsive */
-@media (max-width: 768px) {
-  .stats-container {
-    grid-template-columns: 1fr;
-  }
-}

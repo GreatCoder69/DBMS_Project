@@ -1,51 +1,55 @@
-/* Purple Top Bar */
-.top-bar {
-  background-color: #37003c; /* Premier League Purple */
-  color: white;
-  padding: 10px 0;
-  text-align: center;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
+
+.navbar {
+  font-family: 'Raleway', sans-serif !important;
+  background-color: black !important;
+  padding: 15px 0;
+  height: 12vh;
 }
 
-.top-bar img {
-  height: 50px;
-  margin-right: 5px;
-}
-
-/* Navigation Bar */
-.navbar-custom {
-  background-color: white;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-nav .nav-item .nav-link {
-  color: black;
+/* Navigation links */
+.navbar-nav .nav-link {
+  color: white !important;
+  font-size: 18px;
   font-weight: 500;
-  transition: 0.3s ease-in-out;
+  position: relative;
+  padding-bottom: 10px; /* Adds space between text and underline */
+  transition: color 0.3s ease-in-out;
+  text-transform: uppercase;
+  text-decoration: none !important; /* Removes default underline */
 }
 
-.navbar-nav .nav-item .nav-link:hover {
-  color: #37003c; /* Hover effect */
+/* Hover effect on links */
+.navbar-nav .nav-link:hover {
+  color: #00aaff !important; /* Azure accent */
+  text-shadow: 0px 0px 8px #00aaff;
 }
 
-/* Buttons */
-.btn-signin {
-  background-color: #37003c;
-  color: white;
-  border-radius: 20px;
-  padding: 5px 15px;
+/* Custom underline effect with spacing */
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px; /* Controls distance from text */
+  width: 0%;
+  height: 3px;
+  background: #00aaff; /* Azure underline */
+  transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+  transform: translateX(-50%);
 }
 
-.btn-search {
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
-  color: black;
+/* Expanding underline on hover */
+.navbar-nav .nav-link:hover::after {
+  width: 60%; /* Controls underline length */
 }
 
-.btn-search:hover {
-  color: #37003c;
+/* Navbar logo */
+.navbar-brand img {
+  width: 80px;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Slight bounce effect when hovering over the logo */
+.navbar-brand img:hover {
+  transform: scale(1.1);
 }
