@@ -1,3 +1,4 @@
+/* Container Styling */
 .club-container {
   background-color: #000000 !important;
   min-height: 100vh;
@@ -8,6 +9,7 @@
   gap: 2.5rem;
 }
 
+/* Club Card Styling */
 .club-card {
   background-color: #2c2c2c;
   border: 2px solid #00f7ff33;
@@ -44,177 +46,10 @@
   font-size: 1.6rem;
   font-weight: bold;
   color: #00f7ff;
-  text-align: center;
   margin-bottom: 0.5rem;
 }
 
-.modal-backdrop {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-color: #000c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.club-modal {
-  background-color: #121212;
-  padding: 2.5rem 2rem 2rem 2rem;
-  border-radius: 14px;
-  width: 95%;
-  max-width: 750px;
-  color: white;
-  box-shadow: 0 0 30px #00f7ffaa;
-  animation: zoomIn 0.4s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-@keyframes zoomIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.modal-badge {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 2rem 0 1.2rem 0;
-  border: 3px solid #00f7ff;
-  box-shadow: 0 0 16px #00f7ff;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.modal-info {
-  margin-bottom: 2.2rem;
-  margin-top: 0.5rem;
-  line-height: 2.2;
-  font-size: 1.1rem;
-  text-align: center;
-}
-
-.stadium-image {
-  width: 100%;
-  max-width: 500px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin: 2rem auto 1.5rem auto;
-  box-shadow: 0 0 12px #0ff;
-  display: block;
-}
-
-.no-stadium-image {
-  display: block;
-  width: 100%;
-  text-align: center;
-  color: #ff7675;
-  font-style: italic;
-  font-size: 1.1em;
-  margin-top: 1rem;
-}
-
-.table {
-  width: 100%;
-  margin-top: 2rem;
-  background: #1c1c1c;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.table th, .table td {
-  text-align: center !important;
-  vertical-align: middle !important;
-  padding: 1rem 0.5rem;
-}
-
-.table th {
-  background-color: #121212;
-  color: #00f7ff;
-  text-shadow: 0 0 5px #00f7ff;
-  border-bottom: 2px solid #00f7ff;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-}
-
-.table td {
-  color: #fff;
-  background-color: #1c1c1c;
-  font-size: 1.05rem;
-}
-
-.table tr {
-  border-bottom: 1px solid #00f7ff33;
-}
-
-.player-face {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #0ff;
-  display: inline-block;
-}
-
-.no-player-image {
-  display: block;
-  color: #ff7675;
-  font-style: italic;
-  font-size: 1em;
-  text-align: center;
-  margin-top: 0.5rem;
-}
-
-.btn-outline-light {
-  border-color: #00f7ff;
-  color: #00f7ff;
-  margin-top: 2rem;
-  padding: 0.7rem 2.2rem;
-  font-size: 1.08rem;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
-.btn-outline-light:hover {
-  background-color: #00f7ff;
-  color: black;
-}
-/* Modal Backdrop stays fullscreen */
-.modal-backdrop {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background-color: rgba(0,0,0,0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  overflow: auto; /* allow scrolling if needed */
-}
-
-/* Make the modal scrollable if content is too tall */
-.club-modal {
-  background-color: #121212;
-  padding: 2.5rem 2rem 2rem 2rem;
-  border-radius: 14px;
-  width: 95%;
-  max-width: 750px;
-  color: white;
-  box-shadow: 0 0 30px #00f7ffaa;
-  animation: zoomIn 0.4s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  max-height: 90vh;      /* Limit modal height to viewport */
-  overflow-y: auto;      /* Enable vertical scroll if needed */
-  overscroll-behavior: contain; /* Prevent background scroll on mobile */
-}
-/* Center the search bar container */
+/* Search Bar Styling */
 .search-bar {
   display: flex;
   justify-content: center;
@@ -223,7 +58,6 @@
   width: 100%;
 }
 
-/* Neon glowing input field */
 .search-bar input[type="text"] {
   width: 320px;
   padding: 0.8rem 1.2rem;
@@ -244,7 +78,6 @@
   color: #fff;
 }
 
-/* Neon glowing clear button */
 .clear-btn {
   margin-left: 1rem;
   padding: 0.8rem 1.5rem;
@@ -264,13 +97,78 @@
   box-shadow: 0 0 16px #00f7ff, 0 0 32px #00f7ff99;
 }
 
-/* Neon glowing heading */
+/* Modal Backdrop */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  overflow: auto;
+}
+
+/* Modal Styling */
+.club-modal {
+  background-color: #121212;
+  padding: 2.5rem 2rem;
+  border-radius: 14px;
+  width: 95%;
+  max-width: 750px;
+  color: white;
+  box-shadow: 0 0 30px #00f7ffaa;
+  animation: zoomIn 0.4s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 90vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-badge {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00f7ff;
+  box-shadow: 0 0 16px #00f7ff;
+  margin: 1rem auto 2rem auto;
+}
+
+.modal-info {
+  margin-bottom: 2rem;
+  line-height: 2;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* Stadium Image */
+.stadium-image {
+  width: 100%;
+  max-width: 500px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 1.5rem auto 2rem auto;
+  box-shadow: 0 0 12px #0ff;
+  display: block;
+}
+
+/* Players Section */
 .players-heading {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: #00f7ff;
-  margin-bottom: 2.5rem;
-  margin-top: 2rem;
+  margin: 2rem 0 1.5rem 0;
   font-weight: bold;
   text-shadow:
     0 0 10px #00f7ff,
@@ -292,7 +190,134 @@
     text-shadow:
       0 0 20px #00f7ff,
       0 0 40px #00f7ff,
-      0 0 80px #00f7ff,
-      0 0 100px #00f7ff99;
+      0 0 60px #00f7ff,
+      0 0 80px #00f7ff99;
+  }
+}
+
+/* Player Table */
+.table {
+  width: 100%;
+  background: #1c1c1c;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.table th, .table td {
+  text-align: center !important;
+  vertical-align: middle !important;
+  padding: 1rem 0.5rem;
+}
+
+.table th {
+  background-color: #121212;
+  color: #00f7ff;
+  text-shadow: 0 0 5px #00f7ff;
+  border-bottom: 2px solid #00f7ff;
+  font-size: 1.1rem;
+}
+
+.table td {
+  color: #fff;
+  background-color: #1c1c1c;
+  font-size: 1.05rem;
+}
+
+.table tr {
+  border-bottom: 1px solid #00f7ff33;
+}
+
+.player-face {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0ff;
+}
+
+/* Close Button */
+.btn-outline-light {
+  border-color: #00f7ff;
+  color: #00f7ff;
+  margin-top: 1.5rem;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.08rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-light:hover {
+  background-color: #00f7ff;
+  color: black;
+}
+
+/* Utility */
+.loading-message,
+.error-message {
+  color: #00f7ff;
+  font-size: 1.3rem;
+  margin-top: 2rem;
+}
+/* Coach Section */
+.coach-section {
+  margin: 2rem 0 2.5rem 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #181818;
+  border-radius: 12px;
+  padding: 1.6rem 1rem 1.2rem 1rem;
+  box-shadow: 0 0 12px #00f7ff44;
+  max-width: 420px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.coach-heading {
+  color: #00f7ff;
+  font-size: 1.7rem;
+  margin-bottom: 1.1rem;
+  text-shadow:
+    0 0 8px #00f7ff,
+    0 0 16px #00f7ff55;
+  font-weight: bold;
+}
+
+.coach-face {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00f7ff;
+  box-shadow: 0 0 10px #00f7ff88;
+  margin-bottom: 1.1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.coach-details {
+  color: #fff;
+  font-size: 1.13rem;
+  line-height: 2;
+  text-align: center;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 600px) {
+  .coach-section {
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .coach-face {
+    width: 70px;
+    height: 70px;
+  }
+  .coach-details {
+    font-size: 1rem;
   }
 }

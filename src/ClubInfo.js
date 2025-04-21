@@ -4,6 +4,7 @@ import './ClubInfo.css';
 const placeholderBadge = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png';
 const placeholderPlayerFace = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/No_picture_available.png/800px-No_picture_available.png';
 const placeholderStadium = 'https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?auto=format&fit=crop&w=800&q=80';
+const placeholderCoach = 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/No_picture_available.png/800px-No_picture_available.png';
 
 const ClubList = () => {
   const [clubs, setClubs] = useState([]);
@@ -16,26 +17,32 @@ const ClubList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clubsRes = await fetch('http://localhost:5000/api/club-players');
-        if (!clubsRes.ok) throw new Error('Network response was not ok');
-        const clubsData = await clubsRes.json();
+        const response = await fetch('http://localhost:5000/api/club-players');
+        if (!response.ok) throw new Error('Network error');
+        const data = await response.json();
 
-        // Group clubs by TEAM_ID
         const clubMap = {};
-        clubsData.forEach(row => {
+        data.forEach(row => {
           const clubId = row.TEAM_ID;
           if (!clubMap[clubId]) {
             clubMap[clubId] = {
               club_name: row.CLUB_NAME,
               club_badge: row.CLUB_BADGE || placeholderBadge,
               founded_year: row.FOUNDED_YEAR,
-              prev_titles: row.PREV_TITLES,
+              prev_titles: row.PREV_TITLES || 0,
               stadium_name: row.STADIUM_NAME,
               stadium_capacity: row.STADIUM_CAPACITY,
               stadium_image: row.STADIUM_IMAGE || placeholderStadium,
+              coach_name: row.COACH_NAME,
+              coach_age: row.COACH_AGE,
+              coach_nationality: row.COACH_NATIONALITY,
+              coach_prev_trophies: row.COACH_PREV_TROPHIES,
+              coach_experience: row.COACH_EXPERIENCE,
+              coach_face_icon: row.COACH_FACE_ICON || placeholderCoach,
               players: []
             };
           }
+
           if (row.PLAYER_ID) {
             clubMap[clubId].players.push({
               player_id: row.PLAYER_ID,
@@ -46,8 +53,10 @@ const ClubList = () => {
             });
           }
         });
-        setClubs(Object.values(clubMap));
-        setFilteredClubs(Object.values(clubMap)); // Initialize filtered clubs
+
+        const allClubs = Object.values(clubMap);
+        setClubs(allClubs);
+        setFilteredClubs(allClubs);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -61,10 +70,6 @@ const ClubList = () => {
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
       const query = searchQuery.trim().toLowerCase();
-      if (query === '') {
-        setFilteredClubs(clubs);
-        return;
-      }
       const filtered = clubs.filter(club =>
         club.club_name.toLowerCase().includes(query)
       );
@@ -107,21 +112,35 @@ const ClubList = () => {
 
       {selectedClub && (
         <div className="modal-backdrop" onClick={closeModal}>
-          <div className="club-modal" onClick={e => e.stopPropagation()}>
+          <div className="club-modal" onClick={(e) => e.stopPropagation()}>
             <h2>{selectedClub.club_name}</h2>
             <div className="modal-info">
               <img src={selectedClub.club_badge} alt="badge" className="modal-badge" />
               <p><strong>Founded:</strong> {selectedClub.founded_year}</p>
-              <p><strong>Previous Titles:</strong> {selectedClub.prev_titles || 0}</p>
+              <p><strong>Previous Titles:</strong> {selectedClub.prev_titles}</p>
               <p><strong>Stadium:</strong> {selectedClub.stadium_name}</p>
               <p><strong>Stadium Capacity:</strong> {selectedClub.stadium_capacity}</p>
             </div>
-            {/* Stadium Image */}
+
             <img src={selectedClub.stadium_image} alt="stadium" className="stadium-image" />
 
-            {/* Players Heading with Neon Effect */}
-            <h4 className="players-heading">Players</h4>
+            <div className="coach-section">
+              <h3 className="coach-heading">Coach</h3>
+              <img
+                src={selectedClub.coach_face_icon}
+                alt="Coach"
+                className="coach-face"
+              />
+              <div className="coach-details">
+                <div><strong>Name:</strong> {selectedClub.coach_name}</div>
+                <div><strong>Age:</strong> {selectedClub.coach_age}</div>
+                <div><strong>Nationality:</strong> {selectedClub.coach_nationality}</div>
+                <div><strong>Experience:</strong> {selectedClub.coach_experience} year(s)</div>
+                <div><strong>Previous Trophies:</strong> {selectedClub.coach_prev_trophies}</div>
+              </div>
+            </div>
 
+            <h4 className="players-heading">Players</h4>
             <table className="table table-dark">
               <thead>
                 <tr>

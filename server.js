@@ -180,22 +180,39 @@ app.get('/api/club-players', async (req, res) => {
 
     const result = await connection.execute(
       `
-      SELECT
-          t.team_id,
-          t.team_name AS club_name,
-          t.team_badge AS club_badge,
-          t.team_founded_year AS founded_year,
-          t.team_prev_prem_titles AS prev_titles,
-          s.stadium_name,
-          s.stadium_capacity,
-          s.stadium_image,
-          p.player_id,
-          p.player_face_icon AS face,
-          p.player_first_name || ' ' || p.player_last_name AS player_name,
-          p.player_position AS position,
-          p.player_nationality AS nationality
+      SELECT 
+        t.team_id,
+        t.team_name AS club_name,
+        t.team_badge AS club_badge,
+        t.team_founded_year AS founded_year,
+        t.team_prev_prem_titles AS prev_titles,
+        t.team_points,
+        t.team_fans,
+        
+        s.stadium_name,
+        s.stadium_capacity,
+        s.stadium_image,
+        s.stadium_avg_attendance,
+        s.stadium_city,
+        s.stadium_year_built,
+        
+        c.coach_id,
+        c.coach_first_name || ' ' || c.coach_last_name AS coach_name,
+        c.coach_age,
+        c.coach_nationality,
+        c.coach_prev_trophies,
+        c.coach_experience,
+        c.coach_face_icon,
+        
+        p.player_id,
+        p.player_face_icon AS face,
+        p.player_first_name || ' ' || p.player_last_name AS player_name,
+        p.player_position AS position,
+        p.player_nationality AS nationality
+        
       FROM Team t
-      LEFT JOIN Stadium s ON t.stadium_id = s.stadium_id
+      JOIN Stadium s ON t.stadium_id = s.stadium_id
+      JOIN Coach c ON t.coach_id = c.coach_id
       LEFT JOIN Player p ON t.team_id = p.team_id
       ORDER BY t.team_name, COALESCE(p.player_id, 0)
       `,
@@ -217,6 +234,7 @@ app.get('/api/club-players', async (req, res) => {
     }
   }
 });
+
 
 app.get('/api/standings', async (req, res) => {
   let connection;
