@@ -27,7 +27,7 @@ const StatsPage = () => {
             players: goalsData.map(player => ({
               name: player.FULL_NAME,
               stat: player.TOTAL_GOALS,
-              image: "test3.png", // placeholder
+              image: player.FACE, // placeholder
               club: player.CLUB,
               clubBadge: player.CLUB_BADGE,
               position: player.POSITION,
@@ -39,7 +39,7 @@ const StatsPage = () => {
             players: assistsData.map(player => ({
               name: player.FULL_NAME,
               stat: player.TOTAL_ASSISTS,
-              image: "test4.png", // placeholder
+              image: player.FACE, // placeholder
               club: player.CLUB,
               clubBadge: player.CLUB_BADGE,
               position: player.POSITION,
@@ -72,13 +72,13 @@ const StatsPage = () => {
               <div className="col-lg-3 col-md-6 col-sm-12" key={idx}>
                 <div className="card player-card">
                   <img
-                    src={`${process.env.PUBLIC_URL}/${player.image}`}
+                    src={player.image} // Ensure this is the correct path to the image
                     className="card-img-top player-img"
-                    alt="Player"
+                    alt={player.name}
                   />
                   <div className="card-body d-flex align-items-center">
                     <img
-                      src={player.clubBadge}
+                      src={player.clubBadge} // Ensure this is the correct path to the badge
                       className="club-logo"
                       alt="Club Logo"
                     />
@@ -113,14 +113,14 @@ const StatsPage = () => {
               {modalPlayers.map((player, index) => (
                 <div key={index} className="modal-player-card">
                   <img
-                    src={`${process.env.PUBLIC_URL}/${player.image}`}
+                    src={player.image} // Ensure this is the correct path to the image
                     className="modal-player-img"
                     alt={player.name}
                   />
                   <div className="modal-player-details">
                     <strong>{player.name}</strong>
                     <p>
-                      Club: <img src={player.clubBadge} alt="" style={{width: 20, height: 20, verticalAlign: "middle", marginRight: 6}} />
+                      Club: <img src={player.clubBadge} alt="Club Badge" style={{width: 20, height: 20, verticalAlign: "middle", marginRight: 6}} />
                       {player.club}
                     </p>
                     <p>Position: {player.position}</p>

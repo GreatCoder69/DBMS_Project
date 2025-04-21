@@ -50,6 +50,7 @@ app.get('/api/players', async (req, res) => {
          p.PLAYER_FIRST_NAME || ' ' || p.PLAYER_LAST_NAME AS FULL_NAME,
          p.PLAYER_POSITION,
          p.PLAYER_NATIONALITY,
+         p.PLAYER_FACE_ICON,
          t.TEAM_BADGE
        FROM 
          PLAYER p
@@ -135,6 +136,7 @@ app.get('/api/top-goal-scorers', async (req, res) => {
       `
       SELECT
           p.player_first_name || ' ' || p.player_last_name AS full_name,
+          p.player_face_icon as face,
           t.team_name AS club,
           t.team_badge AS club_badge,
           p.player_position AS position,
@@ -147,7 +149,7 @@ app.get('/api/top-goal-scorers', async (req, res) => {
       JOIN
           Team t ON p.team_id = t.team_id
       GROUP BY
-          p.player_id, p.player_first_name, p.player_last_name, t.team_name, t.team_badge, p.player_position, p.player_nationality
+          p.player_id, p.player_first_name, p.player_last_name, p.player_face_icon, t.team_name, t.team_badge, p.player_position, p.player_nationality
       ORDER BY
           total_goals DESC,
           p.player_id
@@ -179,69 +181,23 @@ app.get('/api/club-players', async (req, res) => {
     const result = await connection.execute(
       `
       SELECT
-        t.team_id,
-        t.team_name AS club_name,
-        t.team_badge AS club_badge,
-        t.team_founded_year AS founded_year,
-        t.team_prev_prem_titles AS prev_titles,
-        s.stadium_name,
-        s.stadium_capacity,
-        s.stadium_image,
-        p.player_id,
-        ROW_NUMBER() OVER (PARTITION BY t.team_id ORDER BY p.player_id) AS sl_no,
-        p.player_first_name || ' ' || p.player_last_name AS player_name,
-        p.player_position AS position,
-        p.player_nationality AS nationality
+          t.team_id,
+          t.team_name AS club_name,
+          t.team_badge AS club_badge,
+          t.team_founded_year AS founded_year,
+          t.team_prev_prem_titles AS prev_titles,
+          s.stadium_name,
+          s.stadium_capacity,
+          s.stadium_image,
+          p.player_id,
+          p.player_face_icon AS face,
+          p.player_first_name || ' ' || p.player_last_name AS player_name,
+          p.player_position AS position,
+          p.player_nationality AS nationality
       FROM Team t
       LEFT JOIN Stadium s ON t.stadium_id = s.stadium_id
       LEFT JOIN Player p ON t.team_id = p.team_id
-      ORDER BY t.team_name, sl_no
-      `,
-      [],
-      { outFormat: oracledb.OUT_FORMAT_OBJECT }
-    );
-
-    res.json(result.rows);
-  } catch (err) {
-    console.error('❌ Error:', err);
-    res.status(500).send('Server error');
-  } finally {
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (err) {
-        console.error('🔌 Error closing connection:', err);
-      }
-    }
-  }
-});
-
-app.get('/api/top-assisters', async (req, res) => {
-  let connection;
-  try {
-    connection = await oracledb.getConnection(dbConfig);
-
-    const result = await connection.execute(
-      `
-      SELECT
-          p.player_first_name || ' ' || p.player_last_name AS full_name,
-          t.team_name AS club,
-          t.team_badge AS club_badge,
-          p.player_position AS position,
-          p.player_nationality AS nationality,
-          SUM(ps.stat_assists) AS total_assists
-      FROM
-          Player p
-      JOIN
-          Player_Stats ps ON p.player_id = ps.player_id
-      JOIN
-          Team t ON p.team_id = t.team_id
-      GROUP BY
-          p.player_id, p.player_first_name, p.player_last_name, t.team_name, t.team_badge, p.player_position, p.player_nationality
-      ORDER BY
-          total_assists DESC,
-          p.player_id
-      FETCH FIRST 10 ROWS ONLY
+      ORDER BY t.team_name, COALESCE(p.player_id, 0)
       `,
       [],
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
@@ -358,6 +314,52 @@ app.get('/api/debug', async (req, res) => {
     res.status(500).send('Debug failed');
   } finally {
     if (connection) await connection.close();
+  }
+});
+app.get('/api/top-assisters', async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+
+    const result = await connection.execute(
+      `
+      SELECT
+          p.player_first_name || ' ' || p.player_last_name AS full_name,
+          p.player_face_icon as face,
+          t.team_name AS club,
+          t.team_badge AS club_badge,
+          p.player_position AS position,
+          p.player_nationality AS nationality,
+          SUM(ps.stat_assists) AS total_assists
+      FROM
+          Player p
+      JOIN
+          Player_Stats ps ON p.player_id = ps.player_id
+      JOIN
+          Team t ON p.team_id = t.team_id
+      GROUP BY
+          p.player_id, p.player_first_name, p.player_last_name, p.player_face_icon, t.team_name, t.team_badge, p.player_position, p.player_nationality
+      ORDER BY
+          total_assists DESC,
+          p.player_id
+      FETCH FIRST 10 ROWS ONLY
+      `,
+      [],
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('❌ Error:', err);
+    res.status(500).send('Server error');
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (err) {
+        console.error('🔌 Error closing connection:', err);
+      }
+    }
   }
 });
 

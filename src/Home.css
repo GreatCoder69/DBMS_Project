@@ -37,3 +37,26 @@
   z-index: 2; /* Ensures fade is ABOVE the video */
   pointer-events: none; /* Prevents interference */
 }
+/* Scrollbar width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Scrollbar track background */
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  border-radius: 6px;
+}
+
+/* Scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #00ffff;
+  border-radius: 6px;
+  box-shadow: 0 0 8px #00ffff, 0 0 12px #00ffff;
+}
+
+/* Scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #00e5ff;
+  box-shadow: 0 0 12px #00e5ff, 0 0 18px #00e5ff;
+}
