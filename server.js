@@ -141,7 +141,7 @@ app.get('/api/top-goal-scorers', async (req, res) => {
           t.team_badge AS club_badge,
           p.player_position AS position,
           p.player_nationality AS nationality,
-          SUM(ps.stat_goals) AS total_goals
+          FLOOR(SUM(ps.stat_goals)/2) AS total_goals
       FROM
           Player p
       JOIN
